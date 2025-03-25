@@ -1,0 +1,31 @@
+mat-form-field:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.options-form {
+  display: flex;
+  justify-content: center;
+}
+
+table {
+  width: 100%;
+  tr {
+    td {
+      text-align: center;
+    }
+  }
+}
+
+.tooltip {
+  .mdc-tooltip__surface {
+    max-width: unset !important;
+  }
+}
+
+h2 {
+  text-align: center;
+}
+
+i {
+  padding-right: 0.25rem;
+}

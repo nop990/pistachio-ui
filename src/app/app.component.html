@@ -1,0 +1,15 @@
+<mat-toolbar>
+  <div style="display: flex; align-items: center;">
+    <img ngSrc="assets/pistachio.png" alt="Logo" width="56" height="56" style="margin-right: 0.5rem">
+    <span class="toolbar-title">Pistachio Player Projector</span>
+  </div>
+  <div style="display: flex; align-items: center">
+    <button mat-flat-button (click)="openDialog()">Options<i class="mdi mdi-cog" style="margin-left: 0.25rem"></i></button>
+    <button mat-flat-button (click)="runNotebook()" style="margin: 0 0.5rem">Run Notebook<i class="mdi mdi-play" style="margin-left: 0.25rem"></i></button>
+    <button mat-flat-button (click)="changeTheme()"><i class="mdi mdi-theme-light-dark mdi-24px"></i></button>
+  </div>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+
+<footer style="text-align: center">Credits: SquirrelPlays, Sgt. Mushroom, Donkeykong, Daniel Seguin</footer>

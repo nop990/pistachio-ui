@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Pistachio Settings</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <form [formGroup]="optionsForm" class="options-form">
+    <table>
+      <tr>
+        <td style="display: flex; justify-content: right"><i class="mdi mdi-information mdi-18px" matTooltip="{{tooltipTextPath}}" matTooltipClass="tooltip" matTooltipPosition="before"></i>OOTP Data
+          Path:
+        </td>
+        <td><input formControlName="csv_path" type="text"></td>
+      </tr>
+      <tr>
+        <td style="display: flex; justify-content: right"><i class="mdi mdi-information mdi-18px" matTooltip="{{tooltipTextScout}}" matTooltipClass="tooltip" matTooltipPosition="before"></i>Scout ID:
+        </td>
+        <td><input formControlName="scout_id" type="text"></td>
+      </tr>
+      <tr>
+        <td style="display: flex; justify-content: right"><i class="mdi mdi-information mdi-18px" matTooltip="{{tooltipTextTeam}}" matTooltipClass="tooltip" matTooltipPosition="before"></i>Team Abbr:
+        </td>
+        <td><input formControlName="team_id" type="text"></td>
+      </tr>
+    </table>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button (click)="apply()">Apply</button>
+  <button mat-stroked-button (click)="close()">Close</button>
+</mat-dialog-actions>

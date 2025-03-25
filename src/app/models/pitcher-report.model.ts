@@ -1,0 +1,15 @@
+export interface PitcherReport {
+  name: string,
+  age: number,
+  team: string,
+  minor: string,
+  ip: string,
+  throws: string,
+  spOverall: number,
+  rpOverall: number,
+  spPotential: number,
+  rpPotential: number,
+  fipOverall: number,
+  fipPotential: number,
+  flagged: boolean,
+}

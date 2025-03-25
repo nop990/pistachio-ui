@@ -1,0 +1,27 @@
+<h2 style="text-align: center" mat-dialog-title>Displayed Columns</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content style="display: flex; justify-content: center">
+  <form [formGroup]="displayedColumnsForm" style="display: flex; flex-wrap: wrap; justify-content: space-around">
+    @for(column of columnMap | keyvalue : stopSortingMyKeyValuesPlease; track column.value.index) {
+      @if(column.key !== 'name') {
+        <div style="width: 144px">
+          <mat-checkbox [checked]="displayedColumns.includes(column.key)" style="user-select: none" [formControlName]="column.key">{{column.value.label}}</mat-checkbox>
+        </div>
+      }
+    }
+    <div style="width: 144px">
+
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions style="justify-content: space-between">
+  <div>
+    <button mat-button (click)="loadColumns()">Load Saved Columns</button>
+  </div>
+  <div>
+    <button mat-button (click)="clearColumns()">Clear Columns</button>
+    <button mat-button (click)="enableAllColumns()">Enable All</button>
+    <button mat-flat-button (click)="saveColumns()">Save</button>
+    <button mat-stroked-button (click)="close()">Close</button>
+  </div>
+</mat-dialog-actions>

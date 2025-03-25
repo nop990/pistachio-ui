@@ -1,0 +1,12 @@
+.toolbar-title {
+  font-weight: 500;
+  color: var(--mat-sys-on-primary)
+}
+
+mat-toolbar {
+  justify-content: space-between;
+}
+
+.mdi-24px.mdi::before {
+  transform: translateY(2px);
+}

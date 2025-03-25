@@ -1,0 +1,47 @@
+<div style="width: 100%; display: flex; justify-content: space-between; align-items: center">
+  <form [formGroup]="filterForm" style="display: flex">
+    <mat-form-field class="table-filter" appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="filterData()" #input formControlName="search">
+    </mat-form-field>
+    <mat-form-field class="table-filter" appearance="outline">
+      <mat-label>Filter Column</mat-label>
+      <mat-select formControlName="filterColumn" (selectionChange)="filterData()">
+        <mat-option [value]="'all'">all</mat-option>
+        <mat-option *ngFor="let column of this.displayedColumns.slice(0, 12)" [value]="column">{{ column }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div style="align-items: center; display: flex">
+      <mat-checkbox formControlName="flagged" (change)="filterData()" style="margin-right: 1rem; user-select: none">Flagged</mat-checkbox>
+      <mat-checkbox formControlName="majorLeagueOnly" (change)="filterData()" style="margin-right: 1rem; user-select: none">Major League Only</mat-checkbox>
+    </div>
+  </form>
+  <div>
+    <div>
+      <button mat-fab extended style="margin-right: 1rem" (click)="openDisplayedColumnsDialog()">Displayed Columns</button>
+      <button mat-fab extended style="margin-right: 1rem" (click)="openAdvancedFilterDialog()">Advanced Filters</button>
+    </div>
+  </div>
+</div>
+
+<div class="table-container">
+  <table mat-table matSort [dataSource]="data">
+    @for (column of displayedColumns; track column) {
+      <ng-container matColumnDef="{{ column }}" [sticky]="column === 'name'">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header start="desc" [matTooltip]="getTooltip(column)" matTooltipPosition="above">
+          @if(columnsMap[column]) {
+            {{ columnsMap[column].label }}
+          }
+        </th>
+        <td mat-cell *matCellDef="let element" [innerHTML]="formatData(element[column], column)"></td>
+      </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50, 100]"
+                 showFirstLastButtons></mat-paginator>
+</div>
+<footer style="text-align: right; padding-right: 1rem">Disclaimer: These projections are for a best-case season. Baseball happens.</footer>
