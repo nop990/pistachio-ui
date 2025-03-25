@@ -1,0 +1,19 @@
+<h2 mat-dialog-title style="text-align: center">Set Flagged Players</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <form [formGroup]="flaggedForm">
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Flagged Players</mat-label>
+            <textarea matInput #input formControlName="flaggedPlayers" [rows]="flaggedForm.controls['rows'].value"></textarea>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions style="justify-content: space-between">
+    <div>
+        <button mat-button (click)="loadFlagged()">Load</button>
+    </div>
+    <div>
+        <button mat-flat-button (click)="saveFlagged()">Apply</button>
+        <button mat-stroked-button (click)="close()">Close</button>
+    </div>
+</mat-dialog-actions>

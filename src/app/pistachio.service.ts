@@ -4,6 +4,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {BehaviorSubject, catchError, filter, of, switchMap, tap} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {DataManipulationService} from './data-manipulation.service';
+import {filterForm} from "./utils";
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,9 @@ export class PistachioService {
 
   public runNotebook() {
     this.loadingSignal.set(true);
+    filterForm.reset({'search': '', 'filterColumn': 'all', 'flagged': false, 'opsPlusPotentialHasPosition': false, 'majorLeagueOnly': false});
 
-    this.http.post('http://127.0.0.1:5000/runNotebook', {}).pipe(
+    this.http.post('/runNotebook', {}).pipe(
       tap((res: any) => {
         this.loadingSignal.set(false);
         this.snackBar.open(res, 'Dismiss', {
@@ -43,11 +45,14 @@ export class PistachioService {
 
   getBatterReport$ = this.getBatterReportAction.pipe(
     switchMap(() => {
-      return this.http.get('http://127.0.0.1:5000/getBatterReport', {responseType: "text"}).pipe(
-        tap(res => {
+      this.loadingSignal.set(true);
 
+      return this.http.get('/getBatterReport', {responseType: "text"}).pipe(
+        tap(res => {
+          this.loadingSignal.set(false);
         }),
         catchError((error) => {
+          this.loadingSignal.set(false);
           console.log(error);
           if(error.status != 404) {
             this.snackBar.open(`Error: ${error.status}`, 'Dismiss');
@@ -60,11 +65,14 @@ export class PistachioService {
 
   getPitcherReport$ = this.getPitcherReportAction.pipe(
     switchMap(() => {
-      return this.http.get('http://127.0.0.1:5000/getPitcherReport', {responseType: "text"}).pipe(
-        tap(res => {
+      this.loadingSignal.set(true);
 
+      return this.http.get('/getPitcherReport', {responseType: "text"}).pipe(
+        tap(res => {
+          this.loadingSignal.set(false);
         }),
         catchError((error) => {
+          this.loadingSignal.set(false);
           if(error.status != 404) {
             this.snackBar.open(`Error: ${error.status}`, 'Dismiss');
           }
