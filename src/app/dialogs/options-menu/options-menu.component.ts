@@ -17,6 +17,7 @@ export class OptionsMenuComponent implements OnInit {
   protected tooltipTextPath = 'e.g. C:\\Users\\chris\\Documents\\Out of the Park Developments\\OOTP Baseball 26\\saved_games\\Gunch 2.0.lg\\import_export\\csv';
   protected tooltipTextScout = 'Find this in your exported coaches.csv file'
   protected tooltipTextTeam = 'Find this on your Home > Settings page in-game'
+  protected tooltipTextGB = 'Set this to 59 to only show GB and EX-GB, 54 for >= Neutral, or another number of your choosing'
 
   protected optionsForm = optionsForm;
 

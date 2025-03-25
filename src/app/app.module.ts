@@ -27,6 +27,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AdvancedFilterComponent } from './dialogs/advanced-filter/advanced-filter.component';
 import { DisplayedColumnsComponent } from './dialogs/displayed-columns/displayed-columns.component';
+import { FlaggedComponent } from './dialogs/flagged/flagged.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DisplayedColumnsComponent } from './dialogs/displayed-columns/displayed
     PitcherReportComponent,
     OptionsMenuComponent,
     AdvancedFilterComponent,
-    DisplayedColumnsComponent
+    DisplayedColumnsComponent,
+    FlaggedComponent
   ],
   imports: [
     BrowserModule,

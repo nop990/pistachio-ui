@@ -2,6 +2,7 @@ import {Component, inject, Renderer2, Signal} from '@angular/core';
 import {PistachioService} from './pistachio.service';
 import {MatDialog} from '@angular/material/dialog';
 import {OptionsMenuComponent} from './dialogs/options-menu/options-menu.component';
+import {FlaggedComponent} from "./dialogs/flagged/flagged.component";
 
 @Component({
   selector: 'app-root',
@@ -40,9 +41,15 @@ export class AppComponent {
     }
   }
 
-  openDialog() {
+  openOptions() {
     const dialogRef = this.dialog.open(OptionsMenuComponent, {
       height: '400px',
+      width: '600px',
+    });
+  }
+
+  openFlagged() {
+    const dialogRef = this.dialog.open(FlaggedComponent, {
       width: '600px',
     });
   }

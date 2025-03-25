@@ -23,7 +23,7 @@ export class OptionsService {
 
   getOptions$ = this.GetOptionsAction.pipe(
     switchMap(() => {
-      return this.http.get('http://127.0.0.1:5000/getSettings', {responseType: "text"}).pipe(
+      return this.http.get('/getSettings', {responseType: "text"}).pipe(
         tap(res => {
           let response = toml.parse(res).Settings as OptionsModel;
           console.log(response);
@@ -43,7 +43,7 @@ export class OptionsService {
   public getOptionsSignal = toSignal(this.getOptions$);
 
   setSettings(form: any) {
-    return this.http.post('http://127.0.0.1:5000/setSettings', form.getRawValue()).pipe(
+    return this.http.post('/setSettings', form.getRawValue()).pipe(
       tap((res: any) => {
         this.snackbar.open(res, 'Dismiss', {
           duration: 7500

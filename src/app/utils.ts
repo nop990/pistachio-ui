@@ -1,9 +1,15 @@
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
+export let flaggedForm = new FormGroup({
+  flaggedPlayers: new FormControl(''),
+  rows: new FormControl('')
+})
+
 export let optionsForm = new FormGroup({
   csv_path: new FormControl('', Validators.required),
   scout_id: new FormControl('', Validators.required),
   team_id: new FormControl(''),
+  gb_weight: new FormControl('', Validators.required)
 })
 
 export let filterForm = new FormGroup({
@@ -163,12 +169,12 @@ export function formatData(element: string, column: string) {
     case 'team':
       return element === 'Free' ? 'Free Agent' : element;
     case 'minor':
-      return element === '1' ? `<i class="mdi mdi-check"></i>` : '';
+      return element === '1' ? `<i class="mdi mdi-check mdi-18px"></i>` : '';
     case 'primaryPosition':
     case 'recommendedPositions':
       return element.toUpperCase();
     case 'flagged':
-      return element ? `<i class="mdi mdi-flag"></i>` : '';
+      return element ? `<i class="mdi mdi-flag mdi-18px"></i>` : '';
     case 'spOverall':
     case 'rpOverall':
     case 'spPotential':
