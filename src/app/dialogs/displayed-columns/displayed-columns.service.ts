@@ -29,7 +29,7 @@ export class DisplayedColumnsService {
       } else {
         return of();
       }
-      return this.http.get('/' + endpoint, {responseType: "text"}).pipe(
+      return this.http.get('http://localhost:5000/' + endpoint, {responseType: "text"}).pipe(
         tap(res => {
           this.detectColumns(res, type);
           this.snackbar.open('Columns loaded', 'Dismiss', {
@@ -83,7 +83,7 @@ export class DisplayedColumnsService {
 
     console.log(columns);
 
-    return this.http.post('/' + endpoint, columns).pipe(
+    return this.http.post('http://localhost:5000/' + endpoint, columns).pipe(
       tap((res: any) => {
         console.log(res);
         this.snackbar.open(res, 'Dismiss', {

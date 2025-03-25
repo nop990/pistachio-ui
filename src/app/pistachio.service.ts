@@ -26,7 +26,7 @@ export class PistachioService {
     this.loadingSignal.set(true);
     filterForm.reset({'search': '', 'filterColumn': 'all', 'flagged': false, 'opsPlusPotentialHasPosition': false, 'majorLeagueOnly': false});
 
-    this.http.post('/runNotebook', {}).pipe(
+    this.http.post('http://localhost:5000/runNotebook', {}).pipe(
       tap((res: any) => {
         this.loadingSignal.set(false);
         this.snackBar.open(res, 'Dismiss', {
@@ -47,7 +47,7 @@ export class PistachioService {
     switchMap(() => {
       this.loadingSignal.set(true);
 
-      return this.http.get('/getBatterReport', {responseType: "text"}).pipe(
+      return this.http.get('http://localhost:5000/getBatterReport', {responseType: "text"}).pipe(
         tap(res => {
           this.loadingSignal.set(false);
         }),
@@ -67,7 +67,7 @@ export class PistachioService {
     switchMap(() => {
       this.loadingSignal.set(true);
 
-      return this.http.get('/getPitcherReport', {responseType: "text"}).pipe(
+      return this.http.get('http://localhost:5000/getPitcherReport', {responseType: "text"}).pipe(
         tap(res => {
           this.loadingSignal.set(false);
         }),
