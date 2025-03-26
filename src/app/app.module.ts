@@ -1,4 +1,4 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -28,6 +28,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AdvancedFilterComponent } from './dialogs/advanced-filter/advanced-filter.component';
 import { DisplayedColumnsComponent } from './dialogs/displayed-columns/displayed-columns.component';
 import { FlaggedComponent } from './dialogs/flagged/flagged.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,13 @@ import { FlaggedComponent } from './dialogs/flagged/flagged.component';
     MatSelectModule,
     MatTooltipModule,
     MatDividerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
