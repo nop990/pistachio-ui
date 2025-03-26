@@ -7,6 +7,10 @@ mat-toolbar {
   justify-content: space-between;
 }
 
-.mdi-24px.mdi::before {
+.mdi-24px.mdi:not(.no-transform)::before {
   transform: translateY(2px);
+}
+
+.no-transform {
+  transform: translateY(-4px);
 }
