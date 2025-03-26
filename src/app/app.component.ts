@@ -53,4 +53,9 @@ export class AppComponent {
       width: '600px',
     });
   }
+
+  refresh() {
+    this.pistachioService.sendGetBatterReport();
+    this.pistachioService.sendGetPitcherReport();
+  }
 }
