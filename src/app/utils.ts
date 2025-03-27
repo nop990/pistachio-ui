@@ -12,12 +12,21 @@ export let optionsForm = new FormGroup({
   gb_weight: new FormControl('', Validators.required)
 })
 
-export let filterForm = new FormGroup({
+export let filterFormBatters = new FormGroup({
   search: new FormControl(''),
   filterColumn: new FormControl('all'),
   flagged: new FormControl(false),
   opsPlusPotentialHasPosition: new FormControl(false),
-  majorLeagueOnly: new FormControl(false)
+  majorLeagueOnly: new FormControl(false),
+  team: new FormControl(''),
+})
+
+export let filterFormPitchers = new FormGroup({
+  search: new FormControl(''),
+  filterColumn: new FormControl('all'),
+  flagged: new FormControl(false),
+  majorLeagueOnly: new FormControl(false),
+  team: new FormControl(''),
 })
 
 export let displayedColumnsBattersForm = new FormGroup({
@@ -167,7 +176,9 @@ export let columnMapPitchers: { [key: string]: { index: number, label: string } 
 export function formatData(element: string, column: string) {
   switch (column) {
     case 'team':
-      return element === 'Free' ? 'Free Agent' : element;
+      element = element === 'Free' ? 'Free Agent' : element;
+      element = element === '' ? 'Independent' : element;
+      return element;
     case 'minor':
       return element === '1' ? `<i class="mdi mdi-check mdi-18px"></i>` : '';
     case 'primaryPosition':
