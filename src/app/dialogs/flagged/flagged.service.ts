@@ -21,7 +21,7 @@ export class FlaggedService {
 
     GetFlagged$ = this.GetFlaggedAction.pipe(
         switchMap(() => {
-            return this.http.get('http://localhost:5000/getFlagged', {responseType: "text"}).pipe(
+            return this.http.get('http://localhost:8080/getFlagged', {responseType: "text"}).pipe(
                 tap(res => {
                     flaggedForm.controls['flaggedPlayers'].setValue(res);
                     if(res.split('\n').length > 0 && res.split('\n').length < 16) {
@@ -45,14 +45,16 @@ export class FlaggedService {
     public getFlaggedSignal = toSignal(this.GetFlagged$);
 
     setFlagged(form: any) {
-        return this.http.post('http://localhost:5000/setFlagged', form.controls.flaggedPlayers.value).pipe(
+        return this.http.post('http://localhost:8080/setFlagged', form.controls.flaggedPlayers.value, {responseType: "text"}).pipe(
             tap((res: any) => {
                 this.snackbar.open(res, 'Dismiss', {
                     duration: 7500
                 });
             }),
             catchError(err => {
-                console.error(err);
+                this.snackbar.open(err, 'Dismiss', {
+                    duration: 7500
+                });
                 return of();
             }),
         );
