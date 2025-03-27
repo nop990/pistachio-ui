@@ -113,7 +113,7 @@ export let columnMapBatters: { [key: string]: { index: number, label: string } }
   'name': {index: 0, label: 'Name'},
   'age': {index: 1, label: 'Age'},
   'team': {index: 2, label: 'Team'},
-  'minor': {index: 3, label: 'MiLB/INTL'},
+  'minor': {index: 3, label: 'MiLB/KFL'},
   'pa': {index: 4, label: 'PA'},
   'primaryPosition': {index: 5, label: 'Primary Position'},
   'recommendedPositions': {index: 6, label: 'Recommended Positions'},
@@ -161,7 +161,7 @@ export let columnMapPitchers: { [key: string]: { index: number, label: string } 
   'name': {index: 0, label: 'Name'},
   'age': {index: 1, label: 'Age'},
   'team': {index: 2, label: 'Team'},
-  'minor': {index: 3, label: 'MiLB/INTL'},
+  'minor': {index: 3, label: 'MiLB/KFL'},
   'ip': {index: 4, label: 'IP'},
   'throws': {index: 5, label: 'Throws'},
   'spOverall': {index: 6, label: 'SP OVR'},
@@ -177,7 +177,7 @@ export function formatData(element: string, column: string) {
   switch (column) {
     case 'team':
       element = element === 'Free' ? 'Free Agent' : element;
-      element = element === '' ? 'Independent' : element;
+      element = element === '' ? 'Indy/Major Intl' : element;
       return element;
     case 'minor':
       return element === '1' ? `<i class="mdi mdi-check mdi-18px"></i>` : '';
