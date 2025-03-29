@@ -1,5 +1,5 @@
 <div style="width: 100%; display: flex; justify-content: space-between; align-items: center">
-  <form [formGroup]="filterForm" style="display: flex">
+  <form [formGroup]="filterForm" style="display: flex; align-items: center">
     <mat-form-field class="table-filter" appearance="outline">
       <mat-label>Search</mat-label>
       <input matInput (keyup)="filterData()" #input formControlName="search">
@@ -8,18 +8,27 @@
       <mat-label>Filter Column</mat-label>
       <mat-select formControlName="filterColumn" (selectionChange)="filterData()">
         <mat-option [value]="'all'">All</mat-option>
-        <mat-option *ngFor="let column of this.displayedColumns.slice(0, 44)" [value]="column">{{ columnsMap[column].label }}</mat-option>
+        <mat-option *ngFor="let column of this.filterAbleColumns.slice(0, 44)" [value]="column">{{ columnsMap[column].label }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <div style="align-items: center; display: flex">
-      <mat-checkbox formControlName="flagged" (change)="filterData()" style="margin-right: 1rem; user-select: none">Flagged</mat-checkbox>
-      <mat-checkbox formControlName="opsPlusPotentialHasPosition" (change)="filterData()" style="margin-right: 1rem; user-select: none">Has Recommended Position</mat-checkbox>
-      <mat-checkbox formControlName="majorLeagueOnly" (change)="filterData()" style="margin-right: 1rem; user-select: none">Major League Only</mat-checkbox>
+    <div style="align-items: center; display: flex;">
+      <mat-checkbox formControlName="flagged" (change)="filterData()" style="margin-right: 1rem; user-select: none"><i class="mdi mdi-24px mdi-flag"></i></mat-checkbox>
+      <mat-checkbox formControlName="opsPlusPotentialHasPosition" (change)="filterData()" style="margin-right: 1rem; user-select: none">Fielder</mat-checkbox>
+      <mat-checkbox formControlName="majorLeagueOnly" (change)="filterData()" style="margin-right: 1rem; user-select: none">MLB Only</mat-checkbox>
     </div>
+      <mat-form-field appearance="outline" class="table-filter">
+          <mat-label>Team</mat-label>
+          <input matInput formControlName="team" (change)="filterData()">
+      </mat-form-field>
   </form>
   <div>
-    <button mat-fab extended style="margin-right: 1rem" (click)="openDisplayedColumnsDialog()">Displayed Columns</button>
-    <button mat-fab extended style="margin-right: 1rem" (click)="openAdvancedFilterDialog()">Advanced Filters</button>
+      @if(window.innerWidth > 1420) {
+          <button mat-fab extended style="margin-right: 1rem" (click)="openDisplayedColumnsDialog()">Displayed Columns</button>
+          <button mat-fab extended style="margin-right: 1rem" (click)="openAdvancedFilterDialog()">Advanced Filters</button>
+      } @else {
+          <button mat-fab style="margin-right: 1rem" (click)="openDisplayedColumnsDialog()" title="Displayed Columns"><i class="mdi mdi-table-column"></i></button>
+          <button mat-fab style="margin-right: 1rem" (click)="openAdvancedFilterDialog()" title="Advanced Filters"><i class="mdi mdi-filter"></i></button>
+      }
   </div>
 </div>
 
@@ -45,5 +54,5 @@
   <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50, 100]"
                  showFirstLastButtons></mat-paginator>
 </div>
-<footer style="text-align: right; padding-right: 1rem">Disclaimer: These projections are for a best-case season. Baseball happens.</footer>
+<p style="text-align: right; padding-right: 1rem">Disclaimer: These projections are for a best-case season. Baseball happens.</p>
 

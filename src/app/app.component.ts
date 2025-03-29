@@ -3,6 +3,7 @@ import {PistachioService} from './pistachio.service';
 import {MatDialog} from '@angular/material/dialog';
 import {OptionsMenuComponent} from './dialogs/options-menu/options-menu.component';
 import {FlaggedComponent} from "./dialogs/flagged/flagged.component";
+import {OptionsService} from "./dialogs/options-menu/options.service";
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,13 @@ import {FlaggedComponent} from "./dialogs/flagged/flagged.component";
 })
 export class AppComponent {
   private pistachioService = inject(PistachioService);
+  private optionsService = inject(OptionsService);
+  private getOptionsSignal: Signal<any> = this.optionsService.getOptionsSignal;
   isDarkMode = true;
 
   private renderer = inject(Renderer2);
   private dialog = inject(MatDialog);
+
 
   constructor() {
     const savedTheme = localStorage.getItem('theme');
@@ -45,6 +49,7 @@ export class AppComponent {
     const dialogRef = this.dialog.open(OptionsMenuComponent, {
       height: '400px',
       width: '600px',
+      data: this.getOptionsSignal()
     });
   }
 
@@ -52,5 +57,9 @@ export class AppComponent {
     const dialogRef = this.dialog.open(FlaggedComponent, {
       width: '600px',
     });
+  }
+
+  refresh() {
+    this.pistachioService.refresh();
   }
 }

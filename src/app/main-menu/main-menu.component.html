@@ -1,23 +1,23 @@
 <div class="main-container">
-  @if (loadingSignal()) {
-    <mat-spinner></mat-spinner>
-  } @else if ((getBatterReportSignal() == null || getBatterReportSignal().length > 0) && (getPitcherReportSignal() == null || getPitcherReportSignal().length > 0)) {
-    <mat-tab-group>
-      <mat-tab label="Batters">
-        <app-batter-report [data]="batterData()" [originalData]="batterData()"></app-batter-report>
-      </mat-tab>
-      <mat-tab label="Pitchers">
-        <app-pitcher-report [data]="pitcherData()" [originalData]="pitcherData()"></app-pitcher-report>
-      </mat-tab>
-      <mat-tab label="Roster Builder">
-        <div style="text-align: center; margin-top: 20px;">
-          <i style="font-size: 48px; color: var(--mat-sys-on-surface);" class="mdi mdi-timer-sand"></i>
-          <h2 style="color: var(--mat-sys-on-surface);">Coming Soon</h2>
-          <p style="color: var(--mat-sys-on-surface);">Stay tuned for updates!</p>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-  } @else {
-    <h2>Please run the notebook to generate batter/pitcher reports</h2>
-  }
+    @if(loadingSignal()) {
+        <mat-spinner></mat-spinner>
+    } @else if (getBatterReportSignal().data && getPitcherReportSignal().data) {
+        <mat-tab-group>
+            <mat-tab label="Batters">
+                <app-batter-report [data]="getBatterReportSignal()" [originalData]="getBatterReportSignal()"></app-batter-report>
+            </mat-tab>
+            <mat-tab label="Pitchers">
+                <app-pitcher-report [data]="getPitcherReportSignal()" [originalData]="getPitcherReportSignal()"></app-pitcher-report>
+            </mat-tab>
+            <mat-tab label="Roster Builder">
+                <div style="text-align: center; margin-top: 20px;">
+                    <i style="font-size: 48px; color: var(--mat-sys-on-surface);" class="mdi mdi-timer-sand"></i>
+                    <h2 style="color: var(--mat-sys-on-surface);">Coming Soon</h2>
+                    <p style="color: var(--mat-sys-on-surface);">Stay tuned for updates!</p>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    } @else {
+        <h2>Please run the notebook to generate batter/pitcher reports</h2>
+    }
 </div>

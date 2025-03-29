@@ -1,16 +1,25 @@
 <mat-toolbar>
-  <div style="display: flex; align-items: center;">
-    <img ngSrc="assets/pistachio.png" alt="Logo" width="56" height="56" style="margin-right: 0.5rem">
-    <span class="toolbar-title">Pistachio Player Projector</span>
-  </div>
-  <div style="display: flex; align-items: center">
-    <button mat-flat-button (click)="openFlagged()" style="margin-right: 0.5rem;">Flagged Players<i class="mdi mdi-flag" style="margin-left: 0.25rem"></i></button>
-    <button mat-flat-button (click)="openOptions()">Options<i class="mdi mdi-cog" style="margin-left: 0.25rem"></i></button>
-    <button mat-flat-button (click)="runNotebook()" style="margin: 0 0.5rem">Run Notebook<i class="mdi mdi-play" style="margin-left: 0.25rem"></i></button>
-    <button mat-flat-button (click)="changeTheme()"><i class="mdi mdi-theme-light-dark mdi-24px"></i></button>
-  </div>
+    <div style="display: flex; align-items: center;">
+        <img ngSrc="assets/pistachio.png" alt="Logo" width="56" height="56" style="margin-right: 0.5rem">
+        <span class="toolbar-title">Pistachio Player Projector</span>
+    </div>
+    <div style="display: flex; align-items: center">
+        <button mat-icon-button (click)="refresh()"><i class="mdi mdi-24px mdi-refresh no-transform"></i></button>
+        <button mat-flat-button (click)="openFlagged()" style="margin: 0 0.5rem;">Flagged Players<i
+                class="mdi mdi-flag" style="margin-left: 0.25rem"></i></button>
+        <button mat-flat-button (click)="openOptions()">Options<i class="mdi mdi-cog" style="margin-left: 0.25rem"></i>
+        </button>
+        <button mat-flat-button (click)="runNotebook()" style="margin: 0 0.5rem">Run Notebook<i class="mdi mdi-play"
+                                                                                                style="margin-left: 0.25rem"></i>
+        </button>
+        <button mat-flat-button (click)="changeTheme()"><i class="mdi mdi-theme-light-dark mdi-24px"></i></button>
+    </div>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
 
-<footer style="text-align: center">Credits: SquirrelPlays, Sgt. Mushroom, Donkeykong, Daniel Seguin</footer>
+<footer style="display: flex; justify-content: space-between;">
+    <p>Front-end and Java microservice author: nop990</p>
+    <p>Jupyter notebook (projection engine) author: squirrel_plays</p>
+    <p>Other credits: Sgt. Mushroom, Donkeykong, Daniel Seguin</p>
+</footer>

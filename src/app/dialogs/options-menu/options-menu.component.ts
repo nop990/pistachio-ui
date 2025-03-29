@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, Signal} from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {optionsForm} from '../../utils';
 import {OptionsService} from './options.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -18,16 +18,16 @@ export class OptionsMenuComponent implements OnInit {
   protected tooltipTextScout = 'Find this in your exported coaches.csv file'
   protected tooltipTextTeam = 'Find this on your Home > Settings page in-game'
   protected tooltipTextGB = 'Set this to 59 to only show GB and EX-GB, 54 for >= Neutral, or another number of your choosing'
+  private options = inject(MAT_DIALOG_DATA);
 
   protected optionsForm = optionsForm;
 
   private optionsService = inject(OptionsService);
-
-  public getOptionsSignal: Signal<any> = this.optionsService.getOptionsSignal;
+  public getOptionsSignal = this.optionsService.getOptionsSignal;
 
   ngOnInit() {
-    this.optionsService.sendGetOptions();
-    console.log(this.getOptionsSignal())
+    this.optionsService.refresh();
+    this.optionsForm.patchValue(this.options)
   }
 
   constructor() {

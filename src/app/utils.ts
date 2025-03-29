@@ -12,12 +12,21 @@ export let optionsForm = new FormGroup({
   gb_weight: new FormControl('', Validators.required)
 })
 
-export let filterForm = new FormGroup({
+export let filterFormBatters = new FormGroup({
   search: new FormControl(''),
   filterColumn: new FormControl('all'),
   flagged: new FormControl(false),
   opsPlusPotentialHasPosition: new FormControl(false),
-  majorLeagueOnly: new FormControl(false)
+  majorLeagueOnly: new FormControl(false),
+  team: new FormControl(''),
+})
+
+export let filterFormPitchers = new FormGroup({
+  search: new FormControl(''),
+  filterColumn: new FormControl('all'),
+  flagged: new FormControl(false),
+  majorLeagueOnly: new FormControl(false),
+  team: new FormControl(''),
 })
 
 export let displayedColumnsBattersForm = new FormGroup({
@@ -104,7 +113,7 @@ export let columnMapBatters: { [key: string]: { index: number, label: string } }
   'name': {index: 0, label: 'Name'},
   'age': {index: 1, label: 'Age'},
   'team': {index: 2, label: 'Team'},
-  'minor': {index: 3, label: 'MiLB/INTL'},
+  'minor': {index: 3, label: 'MiLB|INDY|INTL'},
   'pa': {index: 4, label: 'PA'},
   'primaryPosition': {index: 5, label: 'Primary Position'},
   'recommendedPositions': {index: 6, label: 'Recommended Positions'},
@@ -152,7 +161,7 @@ export let columnMapPitchers: { [key: string]: { index: number, label: string } 
   'name': {index: 0, label: 'Name'},
   'age': {index: 1, label: 'Age'},
   'team': {index: 2, label: 'Team'},
-  'minor': {index: 3, label: 'MiLB/INTL'},
+  'minor': {index: 3, label: 'MiLB|INDY|INTL'},
   'ip': {index: 4, label: 'IP'},
   'throws': {index: 5, label: 'Throws'},
   'spOverall': {index: 6, label: 'SP OVR'},
@@ -167,7 +176,9 @@ export let columnMapPitchers: { [key: string]: { index: number, label: string } 
 export function formatData(element: string, column: string) {
   switch (column) {
     case 'team':
-      return element === 'Free' ? 'Free Agent' : element;
+      element = element === 'Free' ? 'Free Agent' : element;
+      element = element === '' ? 'Indy/Major Intl' : element;
+      return element;
     case 'minor':
       return element === '1' ? `<i class="mdi mdi-check mdi-18px"></i>` : '';
     case 'primaryPosition':
