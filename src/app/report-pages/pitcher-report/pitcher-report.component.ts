@@ -64,50 +64,44 @@ export class PitcherReportComponent implements OnInit, OnChanges, AfterViewInit 
 
     filterData() {
         this.data = new MatTableDataSource(this.originalData.data);
-        let filteredData = this.data.data.filter((pitcher) => {
-            let search: string = this.filterForm.controls.search.value!;
-            let filterColumn: string = this.filterForm.controls.filterColumn.value!;
-            let flaggedBool: boolean = this.filterForm.controls.flagged.value!;
-            let majorLeagueOnlyBool: boolean = this.filterForm.controls.majorLeagueOnly.value!;
-            let teamSearch: string = this.filterForm.controls.team.value!;
-
-            if (teamSearch != '' && formatData(pitcher.team, 'team').toLowerCase() !== teamSearch.toLowerCase()) {
-                return false;
-            }
-
-            if (search != '' && filterColumn === 'all') {
-                let searchLower = search.toLowerCase();
-                let found = false;
-                for (let key in pitcher) {
-                    // @ts-ignore
-                    if (pitcher[key] && pitcher[key].toString().toLowerCase().includes(searchLower)) {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    return false;
-                }
-            } else if (search != '') {
-                let searchLower = search.toLowerCase();
-                // @ts-ignore
-                if (!pitcher[filterColumn] || !pitcher[filterColumn].toString().toLowerCase().includes(searchLower)) {
-                    return false;
-                }
-            }
-
-            if (flaggedBool && !pitcher.flagged) {
-                return false;
-            }
-
-            if (majorLeagueOnlyBool && pitcher.minor.toString() === '1') {
-                return false;
-            }
-
-            return true;
-        });
+        let filteredData = this.data.data.filter(pitcher => this.applyFilters(pitcher));
         this.data = new MatTableDataSource(filteredData);
         this.ngOnChanges();
+    }
+
+    private applyFilters(pitcher: PitcherReport): boolean {
+        return this.filterByTeam(pitcher) &&
+               this.filterBySearch(pitcher) &&
+               this.filterByFlagged(pitcher) &&
+               this.filterByMajorLeagueOnly(pitcher);
+    }
+
+    private filterByTeam(pitcher: PitcherReport): boolean {
+        let teamSearch = this.filterForm.controls.team.value!;
+        return teamSearch === '' || formatData(pitcher.team, 'team').toLowerCase() === teamSearch.toLowerCase();
+    }
+
+    private filterBySearch(pitcher: PitcherReport): boolean {
+        let search = this.filterForm.controls.search.value!;
+        let filterColumn = this.filterForm.controls.filterColumn.value!;
+        if (search === '') return true;
+
+        if (filterColumn === 'all') {
+            return Object.values(pitcher).some(value => value?.toString().toLowerCase().includes(search.toLowerCase()));
+        }
+
+        // @ts-ignore
+        return pitcher[filterColumn]?.toString().toLowerCase().includes(search.toLowerCase());
+    }
+
+    private filterByFlagged(pitcher: PitcherReport): boolean {
+        let flaggedBool = this.filterForm.controls.flagged.value!;
+        return !flaggedBool || pitcher.flagged;
+    }
+
+    private filterByMajorLeagueOnly(pitcher: PitcherReport): boolean {
+        let majorLeagueOnlyBool = this.filterForm.controls.majorLeagueOnly.value!;
+        return !majorLeagueOnlyBool || pitcher.minor.toString() !== '1';
     }
 
     openAdvancedFilterDialog() {
