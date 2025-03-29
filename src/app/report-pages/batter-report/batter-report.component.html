@@ -11,7 +11,7 @@
         <mat-option *ngFor="let column of this.filterAbleColumns.slice(0, 44)" [value]="column">{{ columnsMap[column].label }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <div style="align-items: center; display: flex; align-items: center">
+    <div style="align-items: center; display: flex;">
       <mat-checkbox formControlName="flagged" (change)="filterData()" style="margin-right: 1rem; user-select: none"><i class="mdi mdi-24px mdi-flag"></i></mat-checkbox>
       <mat-checkbox formControlName="opsPlusPotentialHasPosition" (change)="filterData()" style="margin-right: 1rem; user-select: none">Fielder</mat-checkbox>
       <mat-checkbox formControlName="majorLeagueOnly" (change)="filterData()" style="margin-right: 1rem; user-select: none">MLB Only</mat-checkbox>
@@ -22,7 +22,7 @@
       </mat-form-field>
   </form>
   <div>
-      @if(window.innerWidth > 1405) {
+      @if(window.innerWidth > 1420) {
           <button mat-fab extended style="margin-right: 1rem" (click)="openDisplayedColumnsDialog()">Displayed Columns</button>
           <button mat-fab extended style="margin-right: 1rem" (click)="openAdvancedFilterDialog()">Advanced Filters</button>
       } @else {
