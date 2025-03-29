@@ -1,7 +1,7 @@
 # Pistachio UI
 
-The goal of this fork is to experiment with Flask and Angular 19 to develop a PWA (Progressive Web Application) for Pistachio that increases convenience, efficiency, and ease of use for the end-user.
-This repo will serve as the Angular project, which will serve as the front-end for the python Flask/Jupyter server.
+The goal of this fork is to experiment with Spring and Angular 19 to develop a PWA (Progressive Web Application) for Pistachio that increases convenience, efficiency, and ease of use for the end-user.
+This repo will serve as the Angular project, which will serve as the front-end for the Java Spring/Jupyter server. In the future I will be experimenting with Electron to make this a true PWA.
 
 # Squirrel's description for Pistachio
 
