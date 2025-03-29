@@ -1,10 +1,11 @@
-import {computed, inject, Injectable, Signal, signal, WritableSignal} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {computed, effect, inject, Injectable, Signal, signal, WritableSignal} from '@angular/core';
+import {HttpClient, httpResource} from '@angular/common/http';
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {BehaviorSubject, catchError, filter, of, switchMap, tap} from 'rxjs';
-import {toSignal} from '@angular/core/rxjs-interop';
-import {DataManipulationService} from './data-manipulation.service';
+import {catchError, of, tap} from 'rxjs';
 import {filterFormBatters, filterFormPitchers} from "./utils";
+import {BatterReport} from "./models/batter-report.model";
+import {PitcherReport} from "./models/pitcher-report.model";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Injectable({
     providedIn: 'root'
@@ -13,14 +14,6 @@ export class PistachioService {
     private http = inject(HttpClient);
     private snackBar = inject(MatSnackBar);
     loadingSignal: WritableSignal<boolean> = signal(false);
-
-    private dataManipulationService = inject(DataManipulationService);
-
-    private getBatterReportSubject = new BehaviorSubject<void>(undefined);
-    getBatterReportAction = this.getBatterReportSubject.asObservable();
-
-    private getPitcherReportSubject = new BehaviorSubject<void>(undefined);
-    getPitcherReportAction = this.getPitcherReportSubject.asObservable();
 
     public runNotebook() {
         this.loadingSignal.set(true);
@@ -45,8 +38,6 @@ export class PistachioService {
                 this.snackBar.open(res, 'Dismiss', {
                     duration: 7500
                 });
-                this.sendGetBatterReport();
-                this.sendGetPitcherReport();
             }),
             catchError((error) => {
                 console.log(error);
@@ -57,53 +48,23 @@ export class PistachioService {
         ).subscribe();
     }
 
-    getBatterReport$ = this.getBatterReportAction.pipe(
-        switchMap(() => {
-            this.loadingSignal.set(true);
+    private batterReportUrl = 'http://localhost:8080/getBatterReport'
+    private batterReportResource = httpResource<BatterReport[]>(this.batterReportUrl);
 
-            return this.http.get('http://localhost:8080/getBatterReport', {responseType: "text"}).pipe(
-                tap(res => {
-                    this.loadingSignal.set(false);
-                }),
-                catchError((error) => {
-                    this.loadingSignal.set(false);
-                    console.log(error);
-                    if (error.status != 404) {
-                        this.snackBar.open(`Error: ${error.status}`, 'Dismiss');
-                    }
-                    return of(error);
-                })
-            );
-        })
-    );
+    getBatterReportSignal: Signal<MatTableDataSource<BatterReport>> = computed(() => new MatTableDataSource(this.batterReportResource.value()) ?? [])
 
-    getPitcherReport$ = this.getPitcherReportAction.pipe(
-        switchMap(() => {
-            this.loadingSignal.set(true);
 
-            return this.http.get('http://localhost:8080/getPitcherReport', {responseType: "text"}).pipe(
-                tap(res => {
-                    this.loadingSignal.set(false);
-                }),
-                catchError((error) => {
-                    this.loadingSignal.set(false);
-                    if (error.status != 404) {
-                        this.snackBar.open(`Error: ${error.status}`, 'Dismiss');
-                    }
-                    return of(error);
-                })
-            )
-        })
-    );
+    private pitcherReportUrl = 'http://localhost:8080/getPitcherReport'
+    private pitcherReportResource = httpResource<PitcherReport[]>(this.pitcherReportUrl);
 
-    getBatterReportSignal: Signal<any> = toSignal(this.getBatterReport$, {initialValue: null});
-    getPitcherReportSignal: Signal<any> = toSignal(this.getPitcherReport$, {initialValue: null});
+    getPitcherReportSignal: Signal<MatTableDataSource<PitcherReport>> = computed(() => new MatTableDataSource(this.pitcherReportResource.value()) ?? [])
 
-    sendGetBatterReport() {
-        this.getBatterReportSubject.next();
-    }
+    refresh() {
+        this.loadingSignal.set(true);
 
-    sendGetPitcherReport() {
-        this.getPitcherReportSubject.next();
+        this.batterReportResource.reload();
+        this.pitcherReportResource.reload();
+
+        this.loadingSignal.set(false);
     }
 }
