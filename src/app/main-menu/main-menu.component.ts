@@ -13,7 +13,6 @@ import {PitcherReport} from "../models/pitcher-report.model";
 })
 export class MainMenuComponent implements OnInit {
   pistachioService = inject(PistachioService);
-  dataManipulationService = inject(DataManipulationService);
   loadingSignal = this.pistachioService.loadingSignal;
   getBatterReportSignal: Signal<MatTableDataSource<BatterReport>> = this.pistachioService.getBatterReportSignal;
   getPitcherReportSignal: Signal<MatTableDataSource<PitcherReport>> = this.pistachioService.getPitcherReportSignal;
