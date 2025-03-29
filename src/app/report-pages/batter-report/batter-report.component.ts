@@ -79,15 +79,16 @@ export class BatterReportComponent implements OnInit, OnChanges, AfterViewInit {
 
     private applyFilters(batter: BatterReport): boolean {
         return this.filterByTeam(batter) &&
-               this.filterBySearch(batter) &&
-               this.filterByFlagged(batter) &&
-               this.filterByOpsPlusPotential(batter) &&
-               this.filterByMajorLeagueOnly(batter);
+            this.filterBySearch(batter) &&
+            this.filterByFlagged(batter) &&
+            this.filterByOpsPlusPotential(batter) &&
+            this.filterByMajorLeagueOnly(batter);
     }
 
     private filterByTeam(batter: BatterReport): boolean {
-        let teamSearch = this.filterForm.controls.team.value!;
+        let teamSearch = this.filterForm.controls.team.value ? this.filterForm.controls.team.value : '';
         return teamSearch === '' || formatData(batter['team'], 'team').toLowerCase() === teamSearch.toLowerCase();
+
     }
 
     private filterBySearch(batter: BatterReport): boolean {
